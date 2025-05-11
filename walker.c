@@ -147,9 +147,10 @@ void process_array(ASTNode *node, const char *table_name, int parent_id, const c
 
         add_column(jt, "index");
         add_column(jt, "value");
-        char fk[64];
-        snprintf(fk, sizeof(fk), "%s_id", parent_key);
-        add_column(jt, fk);
+
+        char fk_col[64];
+        snprintf(fk_col, sizeof(fk_col), "%s_id", parent_key);
+        add_column(jt, fk_col);
 
         while (elem) {
             KVPair *fields = NULL;
@@ -173,18 +174,20 @@ void process_array(ASTNode *node, const char *table_name, int parent_id, const c
             valkv->next = fields;
             fields = valkv;
 
-            // FK
+            // FK - Fix this part to use the actual parent_id
             char idstr[16];
-            sprintf(idstr, "%d", parent_id);
-            KVPair *fk = make_kv(fk, idstr);
-            if (!fk) {
-                fprintf(stderr, "Error: make_kv returned NULL for key=%s, val=%s\n", fk, idstr ? idstr : "NULL");
+            sprintf(idstr, "%d", parent_id);  // Use the provided parent_id
+            KVPair *fkpair = make_kv(fk_col, idstr);
+            if (!fkpair) {
+                fprintf(stderr, "Error: make_kv returned NULL for key=%s, val=%s\n", fk_col, idstr ? idstr : "NULL");
                 exit(1);
             }
-            fk->next = fields;
-            fields = fk;
+            fkpair->next = fields;
+            fields = fkpair;
 
             add_row(jt, fields);
+            free(val);  // Don't forget to free the stringified value
+
             elem = elem->next;
             index++;
         }

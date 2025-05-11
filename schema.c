@@ -50,7 +50,7 @@ KVPair *make_kv(const char *key, const char *value) {
         return NULL;
     }
     
-    fprintf(stderr, "DEBUG: make_kv allocating for key='%s', value='%s'\n", key, value);
+    // fprintf(stderr, "DEBUG: make_kv allocating for key='%s', value='%s'\n", key, value);
     
     KVPair *kv = malloc(sizeof(KVPair));
     if (!kv) {
@@ -61,8 +61,8 @@ KVPair *make_kv(const char *key, const char *value) {
     kv->key = strdup(key);
     kv->value = strdup(value);
     
-    fprintf(stderr, "DEBUG: make_kv success - kv=%p, key=%p, value=%p\n", 
-            kv, kv->key, kv->value);
+    // fprintf(stderr, "DEBUG: make_kv success - kv=%p, key=%p, value=%p\n", 
+    //         kv, kv->key, kv->value);
     
     kv->next = NULL;
     return kv;

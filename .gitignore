@@ -1,3 +1,4 @@
 *.o
 *.exe
 json2relcsv
+*.csv

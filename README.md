@@ -8,7 +8,7 @@ Make sure `flex` and `bison` are installed.
 
 ```bash
 sudo apt update
-sudo apt install bison flex build-essential
+sudo apt install bison flex build-essential valgrind
 ```
 
 ```bash
@@ -19,7 +19,7 @@ This creates the binary: `./json2relcsv`
 
 ## Usage
 ```bash
-./json2relcsv < input.json
+ valgrind ./json2relcsv --print-ast < tests/input_json_file.json
 ```
 
 Optional flags:
